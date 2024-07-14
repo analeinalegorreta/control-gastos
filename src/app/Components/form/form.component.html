@@ -1,0 +1,27 @@
+<header class=" bg-blue-600 py-8 max-h-72">
+  <h1 class=" uppercase text-center font-black text-4xl text-white">
+    Planificador de Gastos
+  </h1>
+</header>
+<div class=" max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
+  <form  class=" space-y-5"  [formGroup]="myForm"
+  autocomplete="off">
+    <div class=" flex flex-col space-y-5">
+        <label htmlFor="budget" class="text-4xl text-blue-600 font-bold text-center" >
+            Definir Presupuesto
+        </label>
+        <input
+         type="number"
+         class=" w-full bg-white border border-gray-200 p-2"
+         placeholder="Define tu presupuesto"
+         formControlName="budget" />
+    </div>
+    <input type="submit"
+    value='Definir Presupuesto'
+    class=" bg-blue-600  cursor-pointer w-full p-2 text-white font-black uppercase"
+    [disabled]="builderAvailable()"
+    (click)="onSubmit()"
+    [ngClass]="builderAvailable()? 'bg-blue-300' : 'bg-blue-600'"
+    />
+  </form>
+</div>

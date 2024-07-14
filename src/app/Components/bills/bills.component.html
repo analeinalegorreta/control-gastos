@@ -1,0 +1,106 @@
+<header class=" bg-blue-600 py-8 max-h-72">
+  <h1 class=" uppercase text-center font-black text-4xl text-white">
+    Planificador de Gastos
+  </h1>
+</header>
+
+<div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10 grid grid-cols-1 md:grid-cols-2 gap-5">
+  <div class="flex justify-center">
+    <mat-card class="example-card">
+      <mat-card-content>
+        <h2 class="example-h2 text-2xl text-blue-600">{{spendCalculos.budgetPorcent}} % Disponible</h2>
+
+        <mat-progress-spinner class="example-margin" [color]="color" [mode]="mode" [value]="spendCalculos.budgetPorcent">
+        </mat-progress-spinner>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="  flex flex-col justify-center items-center gap-8">
+    <button type="button" class="bg-pink-600 w-full p-2 text-white uppercase font-bold rounded-lg"  (click)="reseteBudger()">
+      Resetear App
+    </button>
+
+    <p class="text-2xl font-bold">
+
+      <span class="font-black text-blue-600">Presupuesto : </span>
+      <span className="font-black text-black"> ${{spendCalculos.budget}}</span>
+    </p>
+
+    <p class="text-2xl font-bold">
+
+      <span class="font-black text-blue-600">Disponible : </span>
+      <span className="font-black text-black"> ${{spendCalculos.calculateSpend}}</span>
+    </p>
+
+    <p class="text-2xl font-bold">
+
+      <span class="font-black text-blue-600">Gastado : </span>
+      <span className="font-black text-black"> ${{spendCalculos.available}}</span>
+    </p>
+  </div>
+</div>
+
+<div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
+  <div class="bg-white shadow-lg rounded-lg p-10">
+    <form>
+      <div class="flex flex-col md:flex-row md:items-center gap-5">
+        <label htmlFor="category">Filtrar Gastos</label>
+        <select id="category" class="bg-slate-100 p-3 flex-1 rounded" (change)="onCustomerChanged($event)">
+          <option value="20">-- Todas las Categorias</option>
+          <option *ngFor="let categoria of categories" [value]="categoria.id" [selected]="categoria.selected">
+            {{categoria.name}}</option>
+        </select>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
+  <div class="mt-10 bg-white shadow-lg rounded-lg p-10">
+    <p class="text-gray-600 text-2xl font-bold" *ngIf="detalleBudger.length==0">No Hay Gastos</p>
+    <p class="text-gray-600 text-2xl font-bold my-5" *ngIf="detalleBudger.length>0">Listado de Gastos.</p>
+
+    <div class="bg-white shadow-lg p-5 w-full border-b border-gray-200 flex gap-5 items-center"
+      *ngFor="let item of detalleBudger">
+      <div>
+        <img src="{{'/assets/public/icono_'+item.categoria?.icon+'.svg'}}" class="w-20" />
+      </div>
+
+      <div class="flex-1 space-y-2">
+        <p class=" text-sm font-bold uppercase text-slate-500">{{item.categoria?.name}}</p>
+        <p>{{item.nombreGasto}}</p>
+        <p class="text-slate-600 text-sm">{{item.fechaDelGasto}}</p>
+        <p>
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class=" text-red-600"
+            fontIcon="highlight_off" (click)="deleteActivity(item.id)" ></mat-icon>
+          <span class="p-2"> </span>
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class=" text-green-800 "
+            fontIcon="create" (click)="openDialogEdit(item.id)" ></mat-icon>
+        </p>
+
+
+      </div>
+
+      <p class="text-2xl text-blue-600 font-bold">
+        <span class="font-black text-black">${{item.cantidad}}</span>
+      </p>
+
+
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
+<div class="fixed right-5 bottom-5 flex items-center justify-center">
+  <button class="bg-blue-600 w-full p-2 text-white uppercase font-bold rounded-lg" (click)="openDialog()">
+    <mat-icon>add_circle</mat-icon>
+  </button>
+
+
+</div>
